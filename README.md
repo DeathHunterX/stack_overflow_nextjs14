@@ -42,3 +42,4 @@ Tailwind CSS
 Shadcn UI
 Zod
 TinyMCE
+ngrok
