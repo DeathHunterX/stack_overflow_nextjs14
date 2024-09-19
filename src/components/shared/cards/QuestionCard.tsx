@@ -57,7 +57,7 @@ const QuestionCard = ({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl="/assets/icons/avatar.svg"
+          imgUrl={author.picture}
           alt="user"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
@@ -67,7 +67,7 @@ const QuestionCard = ({
         />
 
         <Metric
-          imgUrl="assets/icons/like.svg"
+          imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
           value={formatAndDivideNumber(upvotes)}
           title="Votes"
@@ -75,7 +75,7 @@ const QuestionCard = ({
         />
 
         <Metric
-          imgUrl="assets/icons/message.svg"
+          imgUrl="/assets/icons/message.svg"
           alt="message"
           value={formatAndDivideNumber(answers.length)}
           title="Answers"
@@ -83,7 +83,7 @@ const QuestionCard = ({
         />
 
         <Metric
-          imgUrl="assets/icons/eye.svg"
+          imgUrl="/assets/icons/eye.svg"
           alt="eye"
           value={formatAndDivideNumber(views)}
           title="Views"
