@@ -13,7 +13,7 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import User from "@/models/user.model";
-import Question from "@/models/question.model";
+import Question, { IQuestion } from "@/models/question.model";
 import Tag from "@/models/tag.model";
 
 export async function getUserById(params: GetUserByIdParams) {
@@ -151,7 +151,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
 
-    const query: FilterQuery<typeof Question> = searchQuery
+    const query: FilterQuery<IQuestion> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
 
