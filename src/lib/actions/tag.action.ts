@@ -56,6 +56,8 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 
     const { tagId, page = 1, pageSize = 10, searchQuery } = params;
 
+    const skipAmount = (page - 1) * pageSize;
+
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
     const tag = await Tag.findOne(tagFilter).populate({
@@ -66,6 +68,8 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
         : {},
       options: {
         sort: { createdAt: -1 },
+        skip: skipAmount,
+        limit: pageSize + 1,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
