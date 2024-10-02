@@ -12,18 +12,33 @@ import {
 import Tag from "@/models/tag.model";
 import Question from "@/models/question.model";
 import User from "@/models/user.model";
-import { revalidatePath } from "next/cache";
 import Answer from "@/models/answer.model";
 import Interaction from "@/models/interaction.model";
+import { revalidatePath } from "next/cache";
+import { FilterQuery } from "mongoose";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const questions = await Question.find()
+    const { page = 1, pageSize = 10, searchQuery } = params;
+
+    const query: FilterQuery<typeof Question> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+    const skipAmount = (page - 1) * pageSize;
+
+    const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skipAmount)
+      .limit(pageSize);
 
     return { questions };
   } catch (error) {

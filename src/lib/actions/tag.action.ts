@@ -39,9 +39,18 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
 
-    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const { page = 1, pageSize = 20, searchQuery, filter } = params;
 
-    const tags = await Tag.find({}).sort({ createdAt: -1 });
+    const skipAmount = (page - 1) * pageSize;
+
+    const query: FilterQuery<typeof Tag> = searchQuery
+      ? { name: { $regex: new RegExp(searchQuery, "i") } }
+      : {};
+
+    const tags = await Tag.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skipAmount)
+      .limit(pageSize);
 
     return { tags };
   } catch (error) {
