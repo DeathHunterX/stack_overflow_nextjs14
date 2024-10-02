@@ -207,3 +207,21 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
     throw error;
   }
 }
+
+export async function getHotQuestions() {
+  try {
+    connectToDatabase();
+
+    // Hot questions: Popularity Factors: Views, Likes, Number of Comments
+    const hotQuestions = await Question.aggregate([
+      { $project: { _id: 1, title: 1, totalAnswers: { $size: "$answers" } } },
+      { $sort: { view: -1, upvotes: -1, totalAnswers: -1 } },
+      { $limit: 5 },
+    ]);
+
+    return hotQuestions;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
