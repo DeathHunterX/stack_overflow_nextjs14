@@ -1,5 +1,5 @@
 import AllAnswers from "@/components/shared/AllAnswers";
-import Answer from "@/components/shared/forms/Answer";
+import AnswerForm from "@/components/shared/forms/Answer";
 import Metric from "@/components/shared/Metric";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
@@ -109,7 +109,7 @@ const DetailQuestionPage = async ({
         userId={mongoUser._id}
         totalAnswers={result.answers.length}
       />
-      <Answer
+      <AnswerForm
         question={result.content}
         questionId={JSON.stringify(result._id)}
         authorId={JSON.stringify(mongoUser._id)}
