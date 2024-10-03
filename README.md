@@ -42,4 +42,19 @@ Tailwind CSS
 Shadcn UI
 Zod
 TinyMCE
-ngrok
+
+## Reputation Points
+
+- For Question:
+
+  - Asking a question (+5)
+  - Upvoting another user's question (+1)
+  - Downvoting another user's question (-1)
+  - Receiving an upvote from another user (+10)
+  - Receiving a downvote from another user (-2)
+
+- For Answer
+  - Give an answer (+10)
+  - Upvoting another user's answer (+2)
+  - Downvoting another user's question (-2)
+  - Receiving an upvote from another user (+10)
