@@ -10,7 +10,10 @@ import Link from "next/link";
 import React from "react";
 
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
-  const result = await getAllTags({ searchQuery: searchParams.q });
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Tags</h1>

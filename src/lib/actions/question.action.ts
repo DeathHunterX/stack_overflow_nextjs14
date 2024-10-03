@@ -21,7 +21,7 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { page = 1, pageSize = 10, searchQuery } = params;
+    const { page = 1, pageSize = 10, searchQuery, filter } = params;
 
     const query: FilterQuery<typeof Question> = {};
 
@@ -31,12 +31,30 @@ export async function getQuestions(params: GetQuestionsParams) {
         { content: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "newest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "frequent":
+        sortOptions = { views: -1 };
+        break;
+      case "unanswered":
+        query.answers = { $size: 0 };
+        break;
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+
     const skipAmount = (page - 1) * pageSize;
 
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 })
+      .sort(sortOptions)
       .skip(skipAmount)
       .limit(pageSize);
 

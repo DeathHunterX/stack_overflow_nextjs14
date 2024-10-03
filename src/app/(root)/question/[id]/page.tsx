@@ -12,12 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const DetailQuestionPage = async ({
-  params,
-  //   searchParams,
-}: {
-  params: { id: string };
-}) => {
+const DetailQuestionPage = async ({ params, searchParams }: any) => {
   const result = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
 
@@ -108,6 +103,8 @@ const DetailQuestionPage = async ({
         questionId={result._id}
         userId={mongoUser._id}
         totalAnswers={result.answers.length}
+        page={searchParams.page}
+        filter={searchParams.filter}
       />
       <AnswerForm
         question={result.content}

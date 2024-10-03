@@ -2,6 +2,7 @@ import QuestionCard from "@/components/shared/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import HomeFilters from "@/components/shared/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
@@ -11,7 +12,10 @@ import Link from "next/link";
 import React from "react";
 
 const HomePage = async ({ searchParams }: SearchParamsProps) => {
-  const result = await getQuestions({ searchQuery: searchParams.q });
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
 
   return (
     <>
@@ -68,6 +72,8 @@ const HomePage = async ({ searchParams }: SearchParamsProps) => {
           />
         )}
       </div>
+
+      <Pagination />
     </>
   );
 };
