@@ -25,7 +25,7 @@ interface Props {
   authorId: string;
 }
 
-const Answer = ({ question, questionId, authorId }: Props) => {
+const AnswerForm = ({ question, questionId, authorId }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { mode } = useTheme();
   const editorRef = useRef(null);
@@ -157,4 +157,4 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   );
 };
 
-export default Answer;
+export default AnswerForm;
