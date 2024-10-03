@@ -24,7 +24,7 @@ const Pagination = ({ pageNumber, isNext }: Props) => {
       value: nextPageNumber.toString(),
     });
 
-    router.push(newUrl);
+    router.push(newUrl, { scroll: false });
   };
   return (
     <div className="flex w-full items-center justify-center gap-2">
