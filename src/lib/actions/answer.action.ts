@@ -70,7 +70,11 @@ export async function getAnswers(params: GetAnswersParams) {
       .skip(skipAmount)
       .limit(pageSize);
 
-    return { answers };
+    const totalAnswer = await Answer.countDocuments({ question: questionId });
+
+    const isNext = totalAnswer > skipAmount + answers.length;
+
+    return { answers, isNext };
   } catch (error) {
     console.log(error);
     throw error;

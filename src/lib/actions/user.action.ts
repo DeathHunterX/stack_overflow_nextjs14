@@ -137,7 +137,10 @@ export async function getAllUsers(params: GetAllUsersParams) {
       .skip(skipAmount)
       .limit(pageSize);
 
-    return { users };
+    const totalUsers = await User.countDocuments();
+    const isNext = totalUsers > skipAmount + users.length;
+
+    return { users, isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -185,8 +188,6 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const { clerkId, page = 1, pageSize = 10, searchQuery, filter } = params;
 
-    const skipAmount = (page - 1) * pageSize;
-
     const query: FilterQuery<IQuestion> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
@@ -214,13 +215,15 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
         break;
     }
 
+    const skipAmount = (page - 1) * pageSize;
+
     const user = await User.findOne({ clerkId }).populate({
       path: "saved",
       match: query,
       options: {
         sort: sortOptions,
         skip: skipAmount,
-        limit: pageSize + 1,
+        limit: pageSize,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
@@ -234,7 +237,9 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const savedQuestion = user.saved;
 
-    return { questions: savedQuestion };
+    const isNext = user.saved.length > skipAmount;
+
+    return { questions: savedQuestion, isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -284,7 +289,9 @@ export async function getUserQuestions(params: GetUserStatsParams) {
       .populate("tags", "_id name")
       .populate("author", "_id clerkId name picture");
 
-    return { totalQuestions, questions: userQuestions };
+    const isNext = totalQuestions > skipAmount + userQuestions.length;
+
+    return { totalQuestions, questions: userQuestions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -308,7 +315,9 @@ export async function getUserAnswers(params: GetUserStatsParams) {
       .populate("question", "_id title")
       .populate("author", "_id clerkId name picture");
 
-    return { totalAnswers, answers: userAnswers };
+    const isNext = totalAnswers > skipAmount + userAnswers.length;
+
+    return { totalAnswers, answers: userAnswers, isNext };
   } catch (error) {
     console.log(error);
     throw error;
