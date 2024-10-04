@@ -9,6 +9,7 @@ import {
   GetAnswersParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
+import User from "@/models/user.model";
 import Answer from "@/models/answer.model";
 import Interaction from "@/models/interaction.model";
 
@@ -23,11 +24,22 @@ export async function createAnswer(params: CreateAnswerParams) {
     const newAnswer = await Answer.create({ content, author, question });
 
     // Add the answer to the question's answers array
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
 
     // TODO: Add interaction...
+    // Create and interaction record for the user's answer action
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
+
+    // Increment author's reputation by +10 for answering a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
   } catch (error) {}
@@ -108,7 +120,15 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    // Increment author's reputation
+    // Increment author's reputation by +2/-2 for upvoting/revoking an upvote to the answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+
+    // Increment author's reputation by +10/-10 for receiving an upvote/downvote to the answer
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -143,7 +163,12 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    // Increment author's reputation
+    // Decrement author's reputation
+    // Decrement author's reputation by -1/+1 for downvoting/revoking an upvote to the answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? 2 : -2 },
+    });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);

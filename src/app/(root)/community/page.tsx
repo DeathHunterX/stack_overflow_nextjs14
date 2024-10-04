@@ -7,7 +7,11 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
-import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community | Dev Overflow",
+};
 
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
@@ -48,12 +52,14 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
         )}
       </section>
 
-      <div className="mt-10">
-        <Pagination
-          pageNumber={searchParams?.page ? +searchParams.page : 1}
-          isNext={result.isNext}
-        />
-      </div>
+      {result?.users.length !== 0 && (
+        <div className="mt-10">
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            isNext={result.isNext}
+          />
+        </div>
+      )}
     </>
   );
 };

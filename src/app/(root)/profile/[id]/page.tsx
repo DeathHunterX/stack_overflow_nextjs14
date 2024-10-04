@@ -5,7 +5,6 @@ import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getJoinedDate } from "@/lib/utils";
 import ProfileLink from "@/components/shared/ProfileLink";
@@ -80,8 +79,10 @@ const ProfileDetailPage = async ({ params, searchParams }: URLProps) => {
       </div>
 
       <Stats
+        reputation={userInfo?.reputation}
         totalQuestions={userInfo?.totalQuestions}
         totalAnswers={userInfo?.totalAnswers}
+        badgeCounts={userInfo?.badgeCounts}
       />
 
       <div className="mt-10 flex gap-10">
