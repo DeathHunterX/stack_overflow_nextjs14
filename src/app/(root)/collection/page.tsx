@@ -10,6 +10,12 @@ import { auth } from "@clerk/nextjs/server";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Collections | Dev Overflow",
+};
+
 const CollectionPage = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
 

@@ -10,6 +10,12 @@ import Link from "next/link";
 
 import React from "react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags | Dev Overflow",
+};
+
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,

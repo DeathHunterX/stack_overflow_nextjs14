@@ -65,3 +65,11 @@ Ref:
 
 - https://www.youtube.com/watch?v=giYejigUM9A
 - https://github.com/PawanOsman/ChatGPT
+
+## Metadata
+
+Ref:
+
+- https://www.heymeta.com
+- https://metatags.io
+- https://nextjs.org/docs/app/building-your-application/optimizing/metadata
