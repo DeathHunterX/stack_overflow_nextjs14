@@ -79,9 +79,11 @@ const AllAnswers = async ({
           </article>
         ))}
 
-        <div className="mt-10">
-          <Pagination pageNumber={page ? +page : 1} isNext={result.isNext} />
-        </div>
+        {result?.answers.length !== 0 && (
+          <div className="mt-10">
+            <Pagination pageNumber={page ? +page : 1} isNext={result.isNext} />
+          </div>
+        )}
       </div>
     </div>
   );

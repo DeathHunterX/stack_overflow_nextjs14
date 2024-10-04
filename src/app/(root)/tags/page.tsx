@@ -75,12 +75,14 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
         )}
       </section>
 
-      <div className="mt-10">
-        <Pagination
-          pageNumber={searchParams?.page ? +searchParams.page : 1}
-          isNext={result.isNext}
-        />
-      </div>
+      {result?.tags.length !== 0 && (
+        <div className="mt-10">
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            isNext={result.isNext}
+          />
+        </div>
+      )}
     </>
   );
 };
