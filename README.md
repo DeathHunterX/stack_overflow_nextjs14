@@ -58,3 +58,10 @@ TinyMCE
   - Upvoting another user's answer (+2)
   - Downvoting another user's question (-2)
   - Receiving an upvote from another user (+10)
+
+## AI Answer API
+
+Ref:
+
+- https://www.youtube.com/watch?v=giYejigUM9A
+- https://github.com/PawanOsman/ChatGPT
