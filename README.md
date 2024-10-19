@@ -73,3 +73,8 @@ Ref:
 - https://www.heymeta.com
 - https://metatags.io
 - https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+
+## Job API
+
+- https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
+- https://ip-api.com

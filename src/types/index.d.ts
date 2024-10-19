@@ -18,6 +18,11 @@ export interface Job {
   job_city?: string;
   job_state?: string;
   job_country?: string;
+  job_salary_currency?: string;
+  job_min_salary?: number | string;
+  job_max_salary?: number | string;
+  job_posted_at_datetime_utc?: string;
+  employer_company_type?: string;
 }
 
 export interface Country {
