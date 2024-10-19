@@ -26,7 +26,7 @@ const JobsPage = ({ searchParams }: SearchParamsProps) => {
       setIsLoading(true);
       const country =
         searchParams.country ||
-        (await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/ip-api`)
+        (await fetch(`/api/ip-api`)
           .then((res) => res.json())
           .then((data) => data.resData.countryCode)) ||
         "US";
@@ -34,7 +34,7 @@ const JobsPage = ({ searchParams }: SearchParamsProps) => {
       setUrlQuery((prev) => ({ ...prev, country }));
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/jsearch?page=${urlQuery.pages}&q=${urlQuery.q}&country=${country}`
+        `/api/jsearch?page=${urlQuery.pages}&q=${urlQuery.q}&country=${country}`
       );
       const responseData = await response.json();
 
