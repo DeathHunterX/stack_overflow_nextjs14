@@ -22,7 +22,7 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { page = 1, pageSize = 10, searchQuery, filter } = params;
+    const { page = 1, pageSize = 2, searchQuery, filter } = params;
 
     const query: FilterQuery<typeof Question> = {};
 
